@@ -6,6 +6,6 @@
     <title>Shop</title>
 </head>
 <body>
-    <a href="login.php">Login or Sign up</a>
+    <a href="loginreg/login.php">Login or Sign up</a>
 </body>
 </html>

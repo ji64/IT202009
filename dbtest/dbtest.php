@@ -1,6 +1,8 @@
 <?php
 //include our db file
-require("db.php");
+echo "CHANGE <br>";
+require(__DIR__."/../lib/db.php");
+
 //use the function that we just pulled in
 $db = getDB();
 //make sure it's set

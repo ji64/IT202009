@@ -13,31 +13,31 @@ body{
    
 }
 .register{
-    background-color: #fff;
+    background-color: #50A4F2;
     padding: 40px;
-    order: 1;
+    order: 3;
+    width: 400px;
+    text-align: center;
+    align-items: center;
+}
+
+.login{
+    background-color: #FFF;
+    order: 2;
+    padding: 40px;
     width: 400px;
     height: 400px;
     text-align: center;
     align-items: center;
 }
 
-.login{
-    background-color:  #50A4F2;
-    order: 2;
-    padding: 40px;
-    width: 400px;
-    height: 400px;
-    text-align: center;
-}
-
 .login h1{
-    color: #fff;
+    color:  #50A4F2;
     text-transform: uppercase;
 }
 
 .register h1{
-    color: #50A4F2;
+    color: white;
     text-transform: uppercase;
 }
 
@@ -105,15 +105,25 @@ body{
     width: 250px;
 }
 
-#login{
+#register{
     text-decoration: none;
 }
 
-.output{
-    order: 3;
+.flash{
+    background-color:  #50A4F2;
+    color: white;
 }
 
+.output{
+    order: 4;
+}
 
+@media only screen and (min-width:800px){
+    .register{
+        
+        height: 400px;
+    }
+}
 
 
 

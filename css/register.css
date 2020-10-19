@@ -110,6 +110,14 @@ body{
     text-decoration: none;
 }
 
+.flash{
+    background-color:  #50A4F2;
+    margin: auto;
+    margin-bottom: 40px;
+    width: 400;
+    color: white;
+}
+
 .output{
     order: 3;
 }

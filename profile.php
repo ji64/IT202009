@@ -1,4 +1,14 @@
 <?php require_once(__DIR__ . "/partials/nav.php"); ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/profile.css">
+    <title>Shop</title>
+</head>
+
 <?php
 //Note: we have this up here, so our update happens before our get/fetch
 //that way we'll fetch the updated data and have it correctly reflect on the form below
@@ -108,20 +118,21 @@ if (isset($_POST["saved"])) {
 
 
 ?>
-<link rel="stylesheet" href="css/profile.css">
-<div class="container">
-    <form method="POST">
-    
-    <input class="input" placeholder="Email" type="email" name="email" value="<?php safer_echo(get_email()); ?>"/>
-    
-    <input class="input" placeholder="Username" type="text" maxlength="60" name="username" value="<?php safer_echo(get_username()); ?>"/>
-    <!-- DO NOT PRELOAD PASSWORD-->
-    
-    <input class="input" placeholder="Password" type="password" name="password"/>
-   
-    <input class="input" placeholder="Confirm Password" type="password" name="confirm"/>
-    <input class="button1" type="submit" name="saved" value="Save Profile"/>
-    </form>
-</div>
+<body>
+    <div class="flash">
+        <?php require(__DIR__ . "/partials/flash.php");?>
+    </div>
+    <div class="container">
+        <div class="credits">
+            <form method="POST">
+                <input class="input" placeholder="Email" type="email" name="email" value="<?php safer_echo(get_email()); ?>"/>   
+                <input class="input" placeholder="Username" type="text" maxlength="60" name="username" value="<?php safer_echo(get_username()); ?>"/>
+                <!-- DO NOT PRELOAD PASSWORD--> 
+                <input class="input" placeholder="Password" type="password" name="password"/> 
+                <input class="input" placeholder="Confirm Password" type="password" name="confirm"/>
+                <input class="button1" type="submit" name="saved" value="Save Profile"/>
+            </form>
+        </div>
+    </div>
+</body>
 
-<?php require(__DIR__ . "/partials/flash.php");

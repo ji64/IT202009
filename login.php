@@ -9,11 +9,12 @@
     <title>Shop</title>
 </head>
 <body>
+    <div class="flash">
+        <?php require(__DIR__ . "/partials/flash.php");?>
+    </div>
     <div class = "container">
         <div class = "login">
-            <div class="flash">
-                <?php require(__DIR__ . "/partials/flash.php");?>
-            </div>
+            
             <form method="POST">
                 <h1>Login</h1>
                 <input type="text" id="email" name="email" class="input" placeholder="Email" required>

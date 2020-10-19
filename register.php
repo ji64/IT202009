@@ -5,12 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--<link rel="stylesheet" href="css/register.css">-->
+    <link rel="stylesheet" href="css/register.css">
     <title>Shop</title>
 </head>
 
 <?php
-        if (isset($_POST["register"])) {
+        if (isset($_POST["Register"])) {
         $email = null;
         $password = null;
         $confirm = null;
@@ -40,6 +40,11 @@
         if (!isset($email) || !isset($password) || !isset($confirm)) {
             $isValid = false;
         }
+        if (!strpos($email, "@")) {
+            $isValid = false;
+            //echo "<br>Invalid email<br>";
+            flash("Invalid email ");
+        }
         //TODO other validation as desired, remember this is the last line of defense
         if ($isValid) {
             $hash = password_hash($password, PASSWORD_BCRYPT);
@@ -54,22 +59,20 @@
                 $e = $stmt->errorInfo();
                 if ($e[0] == "00000") {
                     flash("Successfully registered! Please login.");
+                    die(header("Location: login.php"));
                 }
                 else {
                     if ($e[0] == "23000") {//code for duplicate entry
                         flash("Username or email already exists.");
-                        echo "Username or email already exists.";
                     }
                     else {
                         flash("An error occurred, please try again");
-                        echo "An error occurred, please try again";
                     }
                 }
             }
         }
         else {
-            flash( "There was a validation issue");
-            echo "There was a validation issue";
+            
         }
     }
     //safety measure to prevent php warnings
@@ -82,11 +85,12 @@
         ?>
 
 <body>
+    <div class="flash">
+        <?php require(__DIR__ . "/partials/flash.php");?>
+    </div>
     <div class="container">
         <div class="register">
-            <div class="flash">
-                <?php require(__DIR__ . "/partials/flash.php");?>
-            </div>
+            
             <form class="box" method="POST">
                 <h1>Register!</h1>
                 <input type="text" id="email" name="email" class="input" placeholder="Email" required value="<?php safer_echo($email); ?>"/>
@@ -114,4 +118,3 @@
 
 
 </html>
-<?php require(__DIR__ . "/partials/flash.php");

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 <head>
@@ -360,4 +361,368 @@ function gameLoop() {
 		</canvas>
 	</main>
 </body>
+=======
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+//modified from http://jsfiddle.net/bencentra/q1s8gmqv/?utm_source=website&utm_medium=embed&utm_campaign=q1s8gmqv
+var canvas;
+var context;
+var loop;
+var leftPaddle;
+var rightPaddle;
+var ball1;
+var ball2;
+var paddleWidth = 25;
+var paddleHeight = 100;
+var ballSize = 10;
+var ballSpeed = 2;
+var paddleSpeed = 2;
+var drawables = [];
+var ball = [];
+// Key Codes
+var W = 87;
+var S = 83;
+var UP = 38;
+var DOWN = 40;
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var outColor = '#';
+  for (var i = 0; i < 6; i++) {
+    outColor += letters[Math.floor(Math.random() * 16)];
+  }
+  return outColor;
+}
+
+
+var colorLeft = '#BC0000';
+var colorRight = '#0000BC';
+
+// Keep track of pressed keys
+var keys = {
+    W: false,
+    S: false,
+    UP: false,
+    DOWN: false
+};
+
+// Keep track of the score
+var leftScore = 0;
+var rightScore = 0;
+function init() {
+    canvas = document.getElementById("board");
+    if (canvas.getContext) {
+        context = canvas.getContext("2d");
+        leftPaddle = makeRect(25, canvas.height / 2 - paddleHeight / 2, paddleWidth, paddleHeight, 5, colorLeft, "left");
+        rightPaddle = makeRect(canvas.width - paddleWidth - 25, canvas.height / 2 - paddleHeight / 2, paddleWidth, paddleHeight, 5, colorRight, "right");
+        ball1 = makeBall(0, 0, ballSize, ballSize, ballSpeed, '#000000', "ball1");
+        ball.push(ball1);
+        drawables.push(leftPaddle);
+        drawables.push(rightPaddle);
+        drawables.push(ball1);
+        //console.log(drawables);
+        resetBall();
+        attachKeyListeners();
+        loop = window.setInterval(gameLoop, 16); //16ms
+        canvas.focus();
+        
+    }
+}
+
+
+
+function resetBall() {
+    
+    for(var i = 0; i < ball.length; i++ ){
+        ball[i].x = canvas.width / 2 - ball[i].w / 2;
+        ball[i].y = canvas.height / 2 - ball[i].w / 2;
+        // Modify the ball object to have two speed properties, one for X and one for Y
+        ball[i].sX = ballSpeed;
+        ball[i].sY = ballSpeed / 2;
+
+        // Randomize initial direction
+        if(ball.length == 1){
+            if (Math.random() > 0.5) {
+                ball[i].sX *= -1;
+            }
+        }
+        
+        // Randomize initial direction
+        if (Math.random() > 0.5) {
+            ball[i].sY *= -1;
+        }
+    }
+
+    if(ball.length == 2){
+        ball[0].sX*=-1;
+        ball[1].sX*=-1;
+    }
+}
+// Bounce the ball off of a paddle
+function bounceBall(i) {
+    // Increase and reverse the X speed
+    if (ball[i].sX > 0) {
+        ball[i].sX += 1;
+        // Add some "spin"
+        if (keys.UP) {
+            ball[i].sY -= 1;
+        } else if (keys.DOWN) {
+            ball[i].sY += 1;
+        }
+    } else {
+        ball[i].sX -= 1;
+        // Add some "spin"
+        if (keys.W) {
+            ball[i].sY -= 1;
+        } else if (keys.S) {
+            ball[i].sY += 1
+        }
+    }
+    ball[i].sX *= -1;
+    
+}
+function attachKeyListeners() {
+    // Listen for keydown events
+    window.addEventListener('keydown', function (e) {
+        //console.log("keydown", e);
+        if (e.keyCode === W) {
+            keys.W = true;
+        }
+        if (e.keyCode === S) {
+            keys.S = true;
+        }
+        if (e.keyCode === UP) {
+            keys.UP = true;
+        }
+        if (e.keyCode === DOWN) {
+            keys.DOWN = true;
+        }
+        //console.log(keys);
+    });
+    window.addEventListener('keyup', function (e) {
+        //console.log("keyup", e);
+        if (e.keyCode === W) {
+            keys.W = false;
+        }
+        if (e.keyCode === S) {
+            keys.S = false;
+        }
+        if (e.keyCode === UP) {
+            keys.UP = false;
+        }
+        if (e.keyCode === DOWN) {
+            keys.DOWN = false;
+        }
+        //console.log(keys);
+    });
+}
+//FINISH ME MAKE ME A BALL CLASS!!!!!!!!
+function makeBall(x, y, width, height, speed, color, rectName) {
+    if (!color)
+        color = '#000000';
+    return {
+        x: x,
+        y: y,
+        w: width,
+        h: height,
+        s: speed,
+        c: color,
+        id: rectName,
+        sX: 0,
+        sY: 0,
+        getName: function(){
+            return rectName;
+        },
+        changeColor: function (color) {
+            this.c = color;
+        },
+        draw: function () {
+            context.fillStyle = this.c;
+            context.fillRect(this.x, this.y, this.w, this.h);
+        }
+    };
+}
+
+// Create a rectangle object - for paddles, ball, etc
+function makeRect(x, y, width, height, speed, color, rectName) {
+    if (!color)
+        color = '#000000';
+    return {
+        x: x,
+        y: y,
+        w: width,
+        h: height,
+        s: speed,
+        c: color,
+        id: rectName,
+        getName: function(){
+            return rectName;
+        },
+        changeColor: function (color) {
+            this.c = color;
+        },
+        draw: function () {
+            context.fillStyle = this.c;
+            context.fillRect(this.x, this.y, this.w, this.h);
+        }
+    };
+}
+function doAI() {
+    for(var i = 0; i < ball.length; i++ ){
+        if (ball[i].x >= canvas.width * .6) {
+            let paddleHalf = paddleHeight / 2;
+            if (ball[i].y > rightPaddle.y + paddleHalf) {
+                rightPaddle.y += rightPaddle.s;
+            } else if (ball[i].y < rightPaddle.y) {
+                rightPaddle.y -= rightPaddle.s;
+            }
+        }
+    }
+    
+    clampToCanvas(rightPaddle);
+}
+function movePaddle() {
+    if (keys.W) {
+        if(leftScore - rightScore >2){
+            leftPaddle.y += leftPaddle.s;
+        } else {
+            leftPaddle.y -= leftPaddle.s;
+        }
+    }
+    if (keys.S) {
+        if(leftScore - rightScore >2){
+            leftPaddle.y -= leftPaddle.s;
+        } else {
+            leftPaddle.y += leftPaddle.s;
+        }
+    }
+    if (keys.UP) {
+        if(leftScore - rightScore >2){
+            leftPaddle.y += leftPaddle.s;
+        } else {
+            leftPaddle.y -= leftPaddle.s;
+        }
+    }
+    if (keys.DOWN) {
+        if(leftScore - rightScore >2){
+            leftPaddle.y -= leftPaddle.s;
+        } else {
+            leftPaddle.y += leftPaddle.s;
+        }
+    }
+    clampToCanvas(leftPaddle);
+}
+function clampToCanvas(paddle) {
+    if (paddle.y < 0) {
+        paddle.y = 0;
+    }
+    if (paddle.y + paddle.h > canvas.height) {
+        paddle.y = canvas.height - paddle.h;
+    }
+}
+function moveBall() {
+    for(var i = 0; i < ball.length; i++ ){
+        // Move the ball
+        ball[i].x += ball[i].sX;
+        ball[i].y += ball[i].sY;
+        // Bounce the ball off the top/bottom
+        if (ball[i].y < 0 || ball[i].y + ball[i].h > canvas.height) {
+            ball[i].sY *= -1;
+        }
+    }
+    
+}
+function checkPaddleCollision() {
+    // Bounce the ball off the paddles
+    for(var i = 0; i < ball.length; i++ ){
+        if (ball[i].y + ball[i].h / 2 >= leftPaddle.y && ball[i].y + ball[i].h / 2 <= leftPaddle.y + leftPaddle.h) {
+            if (ball[i].x <= leftPaddle.x + leftPaddle.w) {
+                bounceBall(i);
+                //console.log(i);
+                //console.log(ball[i]);
+                colorRight = getRandomColor();
+            }
+        }
+        if (ball[i].y + ball[i].h / 2 >= rightPaddle.y && ball[i].y + ball[i].h / 2 <= rightPaddle.y + rightPaddle.h) {
+            if (ball[i].x + ball[i].w >= rightPaddle.x) {
+                bounceBall(i);
+                //console.log(i);
+                //console.log(ball[i]);
+                colorLeft= getRandomColor();
+            }
+        }
+    }
+    
+}
+function checkScore() {
+    // Score if the ball goes past a paddle
+    for(var i = 0; i < ball.length; i++ ){
+        if (ball[i].x < leftPaddle.x) {
+            rightScore++;
+            resetBall();
+            ball[i].sX *= -1;
+            if(rightScore == 5){
+                ball2 = makeBall(0, 0, ballSize, ballSize, ballSpeed, '#000000', "ball2");
+                ball.push(ball2);
+                drawables.push(ball2);
+            }
+        } else if (ball[i].x + ball[i].w > rightPaddle.x + rightPaddle.w) {
+            leftScore++;
+            resetBall();
+            ball[i].sX *= -1;
+        }
+    }
+    
+}
+function drawScores() {
+    // Draw the scores
+    context.fillStyle = '#000000';
+    context.font = '24px Arial';
+    context.textAlign = 'left';
+    context.fillText('Score: ' + leftScore, 5, 24);
+    context.textAlign = 'right';
+    context.fillText('Score: ' + rightScore, canvas.width - 5, 24);
+}
+function erase() {
+    context.fillStyle = '#FFFFFF';
+    if(rightScore >= 5 && rightScore < 10){
+        context.fillStyle = '#333333';  
+    }
+    context.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+function gameLoop() {
+    erase();
+    movePaddle();
+    doAI();
+    moveBall();
+
+    checkPaddleCollision();
+    checkScore();
+    drawScores();
+    //draw stuff
+    for (let i = 0; i < drawables.length; i++) {
+        if(drawables[i].getName().localeCompare("left")){
+            drawables[i].changeColor(colorLeft);
+        }
+        if(drawables[i].getName().localeCompare("right")){
+            drawables[i].changeColor(colorRight);
+        }
+        drawables[i].draw();
+
+    }
+}
+</script>
+</head>
+<body onload="init();">
+	<a href="http://bencentra.com/2017-07-11-basic-html5-canvas-games.html">Collection of Canvas based games by Ben Centra</a>
+	<main>
+		<canvas id="board" width="600px" height="600px" style="border: 1px solid black;">
+		
+		</canvas>
+	</main>
+</body>
+>>>>>>> 79032b23acef2cfebab4d2d786f63c7dc776c2fc
 </html>

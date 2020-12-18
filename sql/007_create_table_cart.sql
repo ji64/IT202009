@@ -2,7 +2,7 @@ CREATE TABLE Cart
 (
     id         int auto_increment,
     product_id int,
-    quantity   int,
+    quantity   int default 1,
     user_id    int,
     price      decimal(12, 2) default 0.00,
     created    datetime       default current_timestamp,

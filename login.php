@@ -39,17 +39,12 @@
                 $isValid = false;
                 flash("Email or password missing");
             }
-            if (!strpos($email, "@")) {
-                $isValid = false;
-                //echo "<br>Invalid email<br>";
-                flash("Invalid email");
-            }
             if ($isValid) {
                 $db = getDB();
                 if (isset($db)) {
-                    $stmt = $db->prepare("SELECT id, email, username, password from Users WHERE email = :email LIMIT 1");
+                    $stmt = $db->prepare("SELECT id, email, username, password from Users WHERE email=:email or username=:username LIMIT 1");
         
-                    $params = array(":email" => $email);
+                    $params = array(":email" => $email, ":username" => $email);
                     $r = $stmt->execute($params);
                     //echo "db returned: " . var_export($r, true);
                     $e = $stmt->errorInfo();

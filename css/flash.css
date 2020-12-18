@@ -1,0 +1,11 @@
+.flash{
+    background-color:  #50A4F2;
+    margin: auto;
+    width: 400px;
+    color: white;
+    text-align: center;
+}
+
+.flash-container{
+    padding: 5px 20px;
+}

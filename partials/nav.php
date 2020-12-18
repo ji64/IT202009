@@ -6,6 +6,7 @@ require_once(__DIR__ . "/../lib/helpers.php");
 
 <ul class="navbar">
     <li class="nav-item"><a href="/../~ji64/home.php">Home</a></li>
+    <li class="nav-item"><a href="/../~ji64/list_product.php">Shop</a></li>
     <?php if (!is_logged_in()): ?>
         <li class="nav-item"><a href="/../~ji64/login.php">Login</a></li>
         <li class="nav-item"><a href="/../~ji64/register.php">Register</a></li>
@@ -13,7 +14,7 @@ require_once(__DIR__ . "/../lib/helpers.php");
     <?php if (has_role("Admin")): ?>
       <div class="dropdown">
         <button class="dropbtn">
-          Test<i class="fa fa-caret-down"></i>
+          Test ▼
         </button>
         <div class="dropdown-content">
           <li class="nav-item"><a href="/../~ji64/test/test_create_egg.php">Create Egg</a></li>
@@ -22,14 +23,23 @@ require_once(__DIR__ . "/../lib/helpers.php");
           <li class="nav-item"><a href="/../~ji64/test/test_list_incubators.php">View Incubator</a></li>
         </div>
       </div>
+
+      <div class="dropdown">
+        <button class="dropbtn">
+          Manage Products ▼
+        </button>
+        <div class="dropdown-content">
+          <li class="nav-item"><a href="/../~ji64/admin/create_product.php">Create Product</a></li>
+          <li class="nav-item"><a href="/../~ji64/list_product.php">View Products</a></li>
+        </div>
+      </div>
         
     <?php endif; ?>
     <?php if (is_logged_in()): ?>
-      <li class="nav-item"><a href="/../~ji64/shop.php">Shop</a></li>
       <li class="nav-item"><a href="/../~ji64/my_cart.php">Cart</a></li>
       <div class="dropdown" id="account">
         <button class="dropbtn">
-          My Account<i class="fa fa-caret-down"></i>
+          My Account ▼
         </button>
         <div class="dropdown-content">
         <li class="nav-item"><a>Balance: <?php echo getBalance(); ?></a></li>

@@ -2,10 +2,11 @@
     background-color:  #50A4F2;
     margin: auto;
     width: 400px;
+    padding: 0.5% 0.5%;
     color: white;
     text-align: center;
 }
 
 .flash-container{
-    padding: 5px 20px;
+    padding: 0 0;
 }

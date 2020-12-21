@@ -4,7 +4,7 @@
 require_once(__DIR__ . "/../lib/helpers.php");
 ?>
 
-<ul class="navbar">
+<ul class="navbar" name="nav">
     <li class="nav-item"><a href="/../~ji64/home.php">Home</a></li>
     <li class="nav-item"><a href="/../~ji64/list_product.php">Shop</a></li>
     <?php if (!is_logged_in()): ?>
@@ -12,7 +12,7 @@ require_once(__DIR__ . "/../lib/helpers.php");
         <li class="nav-item"><a href="/../~ji64/register.php">Register</a></li>
     <?php endif; ?>
     <?php if (has_role("Admin")): ?>
-      <div class="dropdown">
+      <!--<div class="dropdown">
         <button class="dropbtn">
           Test ▼
         </button>
@@ -22,7 +22,7 @@ require_once(__DIR__ . "/../lib/helpers.php");
           <li class="nav-item"><a href="/../~ji64/test/test_create_incubator.php">Create Incubator</a></li>
           <li class="nav-item"><a href="/../~ji64/test/test_list_incubators.php">View Incubator</a></li>
         </div>
-      </div>
+      </div>-->
 
       <div class="dropdown">
         <button class="dropbtn">
@@ -30,7 +30,7 @@ require_once(__DIR__ . "/../lib/helpers.php");
         </button>
         <div class="dropdown-content">
           <li class="nav-item"><a href="/../~ji64/admin/create_product.php">Create Product</a></li>
-          <li class="nav-item"><a href="/../~ji64/list_product.php">View Products</a></li>
+          <li class="nav-item"><a href="/../~ji64/admin/allpurchases.php">View Purchases</a></li>
         </div>
       </div>
         
@@ -42,8 +42,8 @@ require_once(__DIR__ . "/../lib/helpers.php");
           My Account ▼
         </button>
         <div class="dropdown-content">
-        <li class="nav-item"><a>Balance: <?php echo getBalance(); ?></a></li>
         <li class="nav-item"><a href="/../~ji64/profile.php">Profile</a></li>
+        <li class="nav-item"><a href="/../~ji64/purchasehistory.php">Past Orders</a></li>
         <li class="nav-item"><a href="/../~ji64/logout.php">Logout</a></li>
         </div>
       </div>
@@ -89,6 +89,7 @@ require_once(__DIR__ . "/../lib/helpers.php");
 
 /* Dropdown button */
 .dropdown .dropbtn {
+  display: block;
   font-size: 16px;
   border: none;
   outline: none;

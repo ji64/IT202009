@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/buttons.css">
     <link rel="stylesheet" href="css/item.css">
     <title>Shop</title>
 </head>
+<body>
+    
+
 <?php require_once(__DIR__ . "/partials/nav.php"); ?>
 <?php
 //we'll put this at the top so both php block have access to it
@@ -26,6 +30,7 @@ if (isset($id)) {
         $e = $stmt->errorInfo();
         flash($e[2]);
     }
+
 }
 ?>
 <?php if (isset($result) && !empty($result)): ?>
@@ -37,13 +42,47 @@ if (isset($id)) {
             <?php endif; ?>
         </div>
         <div class="card-body">
-            <div>$<?php safer_echo($result["price"]); ?></div>
-            <div>Cat: <?php safer_echo($result["category"]); ?></div>
-            <div>Desc: <?php safer_echo($result["description"]); ?></div>
+            <div><p>Price: $<?php safer_echo($result["price"]); ?></p></div>
+            <div><p>Category: <?php safer_echo($result["category"]); ?></p></div>
+            <div><p>Desc: <?php safer_echo($result["description"]); ?></p></div>
         </div>
     </div>
+
+    <?php if($result['quantity']>0): ?>
+
+    <form method="POST">
+        <button class="button1" onclick="addToCart(<?php safer_echo($id); ?>)">Add to Cart</button>
+    </form>
+
+    <?php endif ?>
+
+    
 <?php else: ?>
     <p>Error looking up id...</p>
 <?php endif; ?>
 <?php require(__DIR__ . "/partials/flash.php");?>
 </body>
+
+<script>
+    function addToCart(itemId){
+        //https://www.w3schools.com/xml/ajax_xmlhttprequest_send.asp
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                let json = JSON.parse(this.responseText);
+                if (json) {
+                    if (json.status == 200) {
+                        alert(json.message);
+                    } else {
+                        alert(json.error);
+                    }
+                }
+            }
+        };
+        xhttp.open("POST", "api/add_to_cart.php", true);
+        //this is required for post ajax calls to submit it as a form
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        //map any key/value data similar to query params
+        xhttp.send("itemId="+itemId);
+    }
+</script>

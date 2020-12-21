@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/flash.css">
+    <link rel="stylesheet" href="css/card.css">
     <link rel="stylesheet" href="css/product_list.css">
    
     <title>Shop</title>
@@ -68,7 +69,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <div class="card-text">
                             <div class="price">$<?php safer_echo($r["price"]);?></div>
                             <div class="category"><?php safer_echo($r["category"]);?></div>
-                            <?php if($r["quantity"]==0):?>
+                            <?php if($r["quantity"]<=0):?>
                                 Out of Stock
                             <?php else:?>
                                 <?php safer_echo($r["quantity"]); ?> in stock
@@ -78,9 +79,12 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </a>
                         <div class="card-footer">
                             <div class="cart-button">
-                            <form method="POST">
-                                <button onclick="addToCart(<?php safer_echo($r['id']); ?>)">Add to Cart</button>
-                            </form>
+                            <?php if($r["quantity"]>0):?>
+                                <form method="POST">
+                                    <button onclick="addToCart(<?php safer_echo($r['id']); ?>)">Add to Cart</button>
+                                </form>
+                            <?php endif; ?>
+
                             </div>
                         </div>
                     </div>
@@ -95,20 +99,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php endif;?>
     </div>
     </div>
-        <nav aria-label="Products">
-            <ul class="pagination">
-                <li class="page-item-<?php echo ($page-1) < 1?"disabled":"";?>">
-                    <a class="page-link" href="?page=<?php echo $page-1;?>" tabindex="-1">Previous</a>
-                </li>
-                <?php for($i = 0; $i < $total_pages; $i++):?>
-                <li class="page-item-<?php echo ($page-1) == $i?"active":"";?>"><a class="page-num" href="?page=<?php echo ($i+1);?>"><?php echo ($i+1);?></a></li>
-                <?php endfor; ?>
-                <li class="page-item-<?php echo ($page+1) > $total_pages?"disabled":"";?>">
-                    <a class="page-link" href="?page=<?php echo $page+1;?>">Next</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+
 
     <script>
         function addToCart(itemId){
@@ -134,5 +125,24 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
     </script>
 <div class="flash">
-<?php require(__DIR__ . "/partials/flash.php");?>
+    <?php require(__DIR__ . "/partials/flash.php");?>
 </div>
+
+    <div>
+        <nav aria-label="Products">
+            <ul class="pagination">
+                <li class="page-item-<?php echo ($page-1) < 1?"disabled":"";?>">
+                    <a class="page-link" href="?page=<?php echo $page-1;?>" tabindex="-1">Previous</a>
+                </li>
+                <?php for($i = 0; $i < $total_pages; $i++):?>
+                <li class="page-item-<?php echo ($page-1) == $i?"active":"";?>"><a class="page-num" href="?page=<?php echo ($i+1);?>"><?php echo ($i+1);?></a></li>
+                <?php endfor; ?>
+                <li class="page-item-<?php echo ($page+1) > $total_pages?"disabled":"";?>">
+                    <a class="page-link" href="?page=<?php echo $page+1;?>">Next</a>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+        
+    </div>

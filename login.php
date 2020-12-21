@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/flash.css">
     <title>Shop</title>
 </head>
 <body>
@@ -19,7 +20,10 @@
                 <h1>Login</h1>
                 <input type="text" id="email" name="email" class="input" placeholder="Email" required>
                 <input type="password" id="password" name="password" class="input" placeholder="Password" required>
+                
                 <input type="submit" value="login" name="login" class="button1">
+
+                <a href="resetpassword.php">Forgot password?</a>
             </form>
         </div>
         

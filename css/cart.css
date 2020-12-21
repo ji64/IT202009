@@ -1,0 +1,42 @@
+h3{
+    margin-left: 20px;
+    font-size: 2.2rem;
+}
+
+.list-group{
+    padding: 10px 10px;
+}
+
+.list-group-item{
+    padding: 20px;
+    background-color: white;
+}
+
+.list-group-item:nth-child(2n){
+    background-color: rgb(199, 199, 199);
+}
+
+.name {
+    display: inline-block;
+    float: left;
+    text-align: left;
+    position: relative;
+    text-transform: capitalize;
+    font-size: 18px;
+}
+
+a:link{
+    text-decoration: none;
+    color: black;
+}
+a:visited{
+    text-decoration: none;
+    color: black;
+}
+
+.price{
+    display: inline-block;
+    text-align: left;
+    padding-left: 20%;
+    overflow: hidden;
+}
